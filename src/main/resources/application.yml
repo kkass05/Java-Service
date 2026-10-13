@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: txt-pipeline
+  servlet:
+    multipart:
+      max-file-size: 900KB
+      max-request-size: 1MB
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+      acks: all
+      properties:
+        max.request.size: 1048576
+        delivery.timeout.ms: 30000
+        request.timeout.ms: 10000
+        max.block.ms: 10000
+    consumer:
+      group-id: txt-storage
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.ByteArrayDeserializer
+    listener:
+      ack-mode: record
+app:
+  topic: txt-files
+  s3-endpoint: ${S3_ENDPOINT:http://localhost:8333}
+  bucket: txt-files
+  access-key: ${S3_ACCESS_KEY:demo}
+  secret-key: ${S3_SECRET_KEY:demo-secret}

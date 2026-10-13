@@ -1,0 +1,12 @@
+target/
+.idea/
+*.iml
+downloaded.txt
+.vscode/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+/src/Java-Service/
